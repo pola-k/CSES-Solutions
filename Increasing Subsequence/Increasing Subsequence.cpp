@@ -14,20 +14,22 @@ int main()
         arr.push_back(num);
     }
 
-    vector<int> dp(size, 1);
+    vector<int> dp;
+    dp.push_back(arr[0]);
 
-    for(int i = size - 2 ; i >= 0 ; i--)
+    for(int i = 1 ; i < size ; i++)
     {
-        if(arr[i] < arr[i + 1])
+        if(arr[i] > dp.back())
         {
-            dp[i] = 1 + dp[i + 1];
+            dp.push_back(arr[i]);
         }
         else
         {
-            dp[i] = dp[i + 1];
+            int index = lower_bound(dp.begin(), dp.end(), arr[i]) - dp.begin();
+            dp[index] = arr[i]; 
         }
     }
 
-    cout << dp[0] << endl;
+    cout << dp.size() << endl;
     return 0;
 }
